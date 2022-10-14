@@ -49,8 +49,12 @@ export const PlayStation: Store = {
       itemNumber;
     const response = await fetch(request_url);
     const response_json = await response.json();
+
+    // TODO: Playstation site likely updated to XML response???
     if (
+      // @ts-ignore
       response_json.products[0].stock.stockLevelStatus !== 'outOfStock' &&
+      // @ts-ignore
       response_json.products[0].maxOrderQuantity >= 0
     ) {
       return true;

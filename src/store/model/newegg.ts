@@ -1,6 +1,316 @@
 import {Store} from './store';
 import fetch from 'node-fetch';
 
+export interface Response {
+  MainItem: {
+    FlagSelect: string;
+    NTCItemMark: boolean;
+    NewProductMark: boolean;
+    Warranty: {
+      WarrantyID: number;
+      WarrantyName: string;
+    };
+    PrtMark: string;
+    OEMMark: string;
+    HideMirMark: string;
+    RestrictedItemMark: string;
+    PriceHideMark: string;
+    ConvertCompleteFlag: string;
+    SameDayShippingMark: string;
+    Src: string;
+    CustomTags: any;
+    EssItemBadges: any;
+    ColorInfo: any;
+    StateExceptionList: any;
+    ItemGroupID: number;
+    ParentItem: any;
+    Subcategory: {
+      SubcategoryId: number;
+      PatchCount: number;
+      SubcategoryDescription: string;
+      RealSubCategoryId: number;
+      RealSubCategoryDescription: string;
+    };
+    Feature: {
+      IsAIT: boolean;
+      IsRestricted: boolean;
+      IsPremier: boolean;
+      IsFirstFromAsia: boolean;
+      IsInPMCC: boolean;
+      IsHot: boolean;
+      IsFreshDeal: boolean;
+      HasManufacturerWarranty: boolean;
+      ShipByNewegg: boolean;
+      ShowOEMRetail: boolean;
+      ShowOEM: boolean;
+      USPSMark: boolean;
+      ShopRunnerMark: any;
+      HasIntelligence: boolean;
+      IsNew: boolean;
+      IsRefurbished: boolean;
+      IsOpenBoxed: boolean;
+      ProductType: number;
+      IsPreLaunch: boolean;
+      ABSMinimum: boolean;
+      IsGiftCard: boolean;
+      IsFlower: boolean;
+      IsPCBuilderReserveItem: boolean;
+    };
+    Seller: {
+      SellerId: string;
+      SellerName: any;
+      SellerLogoURL: any;
+      SellerRating: any;
+      SellerRatingOneDecimal: any;
+      SellerReviewCount: any;
+      SellerUrlKey: any;
+      SellerModel: any;
+      TopRated: boolean;
+      LifetimeOrderCount: number;
+    };
+    Description: {
+      Title: string;
+      IMDescription: string;
+      BulletDescription: string;
+      LineDescription: string;
+      WebDescription: string;
+      LongDescription: any;
+      UrlKeywords: string;
+      ShortTitle: string;
+      WHIDescription: any;
+      ProductName: string;
+      ManualProductName: string;
+    };
+    PromotionInfo: {
+      PromotionText: any;
+      DisplayPromotionText: string;
+      PromotionLink: any;
+      PromotionLinkOpenType: any;
+    };
+    PreorderType: number;
+    Type: number;
+    VolumeDiscount: {
+      PromotionPrice1: number;
+      PromotionPrice2: number;
+      PromotionPrice3: number;
+      PromotionQty1: number;
+      PromotionQty2: number;
+      PromotionQty3: number;
+      PromotionShipping1: number;
+      PromotionShipping2: number;
+      PromotionShipping3: number;
+    };
+    MapPrice: number;
+    MailinRebateCollection: any;
+    Image: {
+      HasScene7Image: boolean;
+      ImageInternalCount: number;
+      WaterMarkFlag: string;
+      ImageType: number;
+      IsDFISImage: boolean;
+      HasWaterMark: boolean;
+      Normal: {
+        ImageNameList: string;
+        ImageName: string;
+        DFIS360ImgFlag: any;
+      };
+      Scene7: {
+        ImageName: any;
+        ImageSetName: any;
+        ImageSetImageList: any;
+        SpinSetName: any;
+        SpinSetImageList: any;
+        ThumbnailSetName: any;
+        ThumbnailSetImageList: any;
+        VendorSetImageList: any;
+        SpecialImageList: any;
+      };
+      ItemCellImageName: string;
+      ImagePathPattern: Array<{
+        Size: number;
+        PathPattern: string;
+      }>;
+    };
+    NewImage: {
+      ImageNameList: string;
+      ImageName: string;
+      DFIS360ImgFlag: any;
+      NobgImageName: any;
+    };
+    Subscription: {
+      SubscriptionProgramID: number;
+      SubscriptionOnly: boolean;
+      SubscriptionOrderFrequency: number;
+      SubscriptionPriceDiscountRate: number;
+      SubscriptionIsFreeShipping: string;
+      SubscriptionContractTerm: number;
+      SubscriptionFreeTrial: number;
+      IsSubscription: boolean;
+      IsRegularSubscription: boolean;
+      IsSubscriptionOnly: boolean;
+      IsCancelSubscription: boolean;
+      IsCommitmentSubscription: boolean;
+      IsSubscriptionFreeShipping: boolean;
+    };
+    Review: {
+      Rating: number;
+      HumanRating: number;
+      CombineGroup: number;
+      ReviewSign: string;
+      ReviewSignValue: any;
+      ViewCount: number;
+      ItemAsDescribedRate: any;
+      DeliverdOnTimeRate: any;
+      SatisfiedServiiceRate: any;
+      PositiveReviewRate: any;
+      ImageVideoReviews: number;
+      RatingOneDecimal: number;
+    };
+    CPUSteppingCode: string;
+    ItemTime: {
+      StartTime: string;
+      ConvertTime: string;
+      ReleaseTime: string;
+      ETATime: string;
+    };
+    NewEggArrivingDate: string;
+    PremierMark: any;
+    ItemManufactory: {
+      BrandId: number;
+      Code: number;
+      Manufactory: string;
+      CountryOfMfr: any;
+      ManfactoryLogo: number;
+      ManufactoryWeb: any;
+      Hyperlink: any;
+      CustomerServicePhone: any;
+      IsM2C: boolean;
+    };
+    RankInfo: {
+      ParentItem: any;
+      ItemNumber: string;
+      OrderPendingFastestDays: number;
+      OrderPendingSlowestDays: number;
+      FastestDays: number;
+      SlowestDays: number;
+      EggPointRate: number;
+      ShippingMethodFastest: number;
+      ShippingMethodSlowest: number;
+      TierEggpointRate: number;
+      InnerEggPercentPoints: any;
+    };
+    ShipFromCountryName: string;
+    ShipFromCountryCode: string;
+    CanPreLaunch: boolean;
+    CanPreorder: boolean;
+    IsAssemblyServiceItem: boolean;
+    IsOperatingSoftwareItem: boolean;
+    NeedReflush: boolean;
+    ShipOutFrom: number;
+    ShipOutTo: number;
+    ShipOutTimeUnit: any;
+    Financing: {
+      TranCode: any;
+      StartDate: any;
+      EndDate: any;
+      Months: number;
+      PayTermType: any;
+    };
+    Download: {
+      DownloadType: number;
+      BoxItem: any;
+      SFItem: any;
+    };
+    IsAcademic: boolean;
+    MappingId: string;
+    IndividualImageName: any;
+    ExpandedNote: any;
+    SellerType: any;
+    PromotionScheduleStatus: string;
+    PromotionScheduleActiveDate: string;
+    PromotionScheduleExpiration: string;
+    PromotionScheduleExpirationLocal: string;
+    SaleEndTimeText: string;
+    HasStudentPrice: boolean;
+    GMCflag: boolean;
+    Model: string;
+    ViewDescription: string;
+    Voting: {
+      WinningCount: number;
+      WinningType: any;
+    };
+    OwnerCost: number;
+    NewProductTag: string;
+    HotSalesTag: string;
+    BigDiscountTag: string;
+    RushSaleTag: string;
+    ItemTagFlag: number;
+    ItemTagFlags: {
+      FreeShipping: number;
+      NeweggPick: number;
+    };
+    ScheduleEndTime: any;
+    ScheduleStartTime: any;
+    ScheduleTypeID: any;
+    IsBuyAloneItem: boolean;
+    IsVacationSeller: boolean;
+    IsBlockSeller: boolean;
+    NoItemBaseDataMark: boolean;
+    NoItemPriceDataMark: boolean;
+    AddToCartType: number;
+    TaxDutyType: any;
+    ImportType: any;
+    DefaultShipVia: string;
+    EggSaverMark: string;
+    OriginalUnitPrice: number;
+    OriginalInstantRebateAmount: number;
+    TaxPrice: any;
+    IsForceViewDetails: boolean;
+    IsHotItem: boolean;
+    BestSellingRanking: number;
+    AutoPartsItemInfo: {
+      ManufacturePartNumber: string;
+      WhiManufactureCode: any;
+      IsWHIItem: boolean;
+      IsUniversalItem: boolean;
+      IsNoFitment: boolean;
+    };
+    ShippingPromotionGroupID: string;
+    ShippingFeeType: number;
+    ShippingFeeFlatRate: number;
+    weight: number;
+    Length: number;
+    Width: number;
+    Height: number;
+    LowestPrice30Days: number;
+    IsLowestPrice: boolean;
+    LaunchDate: any;
+    DurationDays: any;
+    ItemOfArrivalType: number;
+    Item: string;
+    UnitCost: number;
+    InstantRebateAmount: number;
+    ExchangeRate: number;
+    FinalPrice: number;
+    Instock: boolean;
+    Stock: number;
+    StockForCombo: number;
+    StockForPCBuilder: number;
+    ShippingCharge: number;
+    WebsiteBlockMark: boolean;
+    IsActivated: boolean;
+    Active: string;
+    CountryCode: string;
+    CompanyCode: number;
+    LimitQuantity: number;
+    ShowItem: boolean;
+    PriceType: number;
+  };
+  RecommendItem: any;
+  BestSellerItemList: any;
+  IsForceDeactiveItem: any;
+}
+
 export const Newegg: Store = {
   currency: '$',
   labels: {
@@ -1271,7 +1581,8 @@ export const Newegg: Store = {
       'https://www.newegg.com/product/api/ProductRealtime?ItemNumber=' +
       itemNumber;
     const response = await fetch(request_url);
-    const response_json = await response.json();
+    const response_json = (await response.json()) as Response;
+
     return (
       response_json.MainItem !== undefined &&
       response_json.MainItem.Instock === true

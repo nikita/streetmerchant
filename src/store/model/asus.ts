@@ -168,9 +168,11 @@ export const Asus: Store = {
       },
       method: 'POST',
     });
+    // TODO: ASUS site likely updated
     const response_json = await response.json();
-
+    // @ts-ignore
     if (response_json.data[itemNumber] !== undefined) {
+      // @ts-ignore
       const item_info = response_json.data[itemNumber].market_info;
       if (item_info.buy === true || item_info.quantity > 0) {
         return true;

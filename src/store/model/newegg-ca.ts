@@ -1,5 +1,6 @@
 import {Store} from './store';
 import fetch from 'node-fetch';
+import {Response} from './newegg';
 
 export const NeweggCa: Store = {
   currency: '$',
@@ -1012,7 +1013,7 @@ export const NeweggCa: Store = {
       'https://www.newegg.ca/product/api/ProductRealtime?ItemNumber=' +
       itemNumber;
     const response = await fetch(request_url);
-    const response_json = await response.json();
+    const response_json = (await response.json()) as Response;
     return (
       response_json.MainItem !== undefined &&
       response_json.MainItem.Instock === true
