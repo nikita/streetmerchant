@@ -6,6 +6,10 @@ import {URLSearchParams} from 'url';
 
 const {gotify} = config.notifications;
 
+interface Response {
+  error?: any;
+}
+
 export function sendGotifyNotification(link: Link, store: Store) {
   if (!gotify.token || !gotify.url) return;
 
@@ -22,7 +26,7 @@ export function sendGotifyNotification(link: Link, store: Store) {
       }
     );
 
-    const json = await response.json();
+    const json = (await response.json()) as Response;
 
     if (json.error) {
       logger.error('✖ could not send gotify message', json.error);
