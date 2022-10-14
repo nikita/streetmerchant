@@ -201,6 +201,8 @@ async function lookup(browser: Browser, store: Store) {
 
     let adBlockRequestHandler: any;
     let pageProxy;
+
+    /* TODO: Fix class access issue 
     if (useAdBlock) {
       const onProxyFunc = (event: keyof PageEventObject, handler: any) => {
         if (event !== 'request') {
@@ -227,6 +229,7 @@ async function lookup(browser: Browser, store: Store) {
       });
       await enableBlockerInPage(pageProxy);
     }
+    */
 
     await page.setRequestInterception(true);
     page.on('request', async request => {
@@ -234,9 +237,11 @@ async function lookup(browser: Browser, store: Store) {
         return;
       }
 
-      if (await handleAdBlock(request, adBlockRequestHandler)) {
+      /* TODO: Fix class access issue
+     if (await handleAdBlock(request, adBlockRequestHandler)) {
         return;
       }
+      */
 
       if (await handleProxy(request, proxy)) {
         return;
