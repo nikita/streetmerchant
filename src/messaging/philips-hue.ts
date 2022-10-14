@@ -30,7 +30,11 @@ const adjustLightsWithAPI = (hueBridge: Api) => {
     const rgbArray = lightColor.split(',');
     // If there's not three values, must not be RGB
     if (rgbArray.length === 3) {
-      lightState.rgb(rgbArray[0], rgbArray[1], rgbArray[2]);
+      lightState.rgb(
+        Number(rgbArray[0]),
+        Number(rgbArray[1]),
+        Number(rgbArray[2])
+      );
     } else {
       logger.debug('✖ Error assigning RGB Values');
     }
@@ -91,6 +95,7 @@ export function adjustPhilipsHueLights() {
         .connect(apiKey)
         .then(
           hueBridge => {
+            // @ts-ignore TODO: Fix types
             adjustLightsWithAPI(hueBridge);
             logger.info('✔ adjusted Philips Hue lights over LAN');
           },
@@ -109,6 +114,7 @@ export function adjustPhilipsHueLights() {
           .connectWithTokens(accessToken, refreshToken, remoteApiUsername)
           .then(
             hueBridge => {
+              // @ts-ignore TODO: Fix types
               adjustLightsWithAPI(hueBridge);
               logger.info('✔ adjusted Philips Hue lights over cloud');
             },
