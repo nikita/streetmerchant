@@ -31,6 +31,10 @@ export const Amazon: Store = {
         container: '#buy-now-button',
         text: ['buy now'],
       },
+      {
+        container: '#a-autoid-2-offer-0-announce',
+        text: ['add to cart'],
+      },
     ],
     maxPrice: {
       container: '.a-offscreen',
@@ -541,6 +545,111 @@ export const Amazon: Store = {
       series: '3090',
       url: 'https://www.amazon.com/dp/B08HJLLF7G',
     },
+    {
+      brand: 'asus',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BGT61797&Quantity.1=1',
+      model: 'strix oc',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BGT61797',
+    },
+    {
+      brand: 'asus',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BGV6LQYR&Quantity.1=1',
+      model: 'tuf oc',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BGV6LQYR',
+    },
+    {
+      brand: 'gigabyte',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BGP87RQ2&Quantity.1=1',
+      model: 'aorus master',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BGP87RQ2',
+    },
+    {
+      brand: 'gigabyte',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BGP8FGNZ&Quantity.1=1',
+      model: 'gaming oc',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BGP8FGNZ',
+    },
+    {
+      brand: 'gigabyte',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BGP9X18Q&Quantity.1=1',
+      model: 'gaming',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BGP9X18Q',
+    },
+    {
+      brand: 'msi',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BG959RCF&Quantity.1=1',
+      model: 'gaming trio',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BG959RCF',
+    },
+    {
+      brand: 'msi',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BG94PS2F&Quantity.1=1',
+      model: 'gaming x trio',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BG94PS2F',
+    },
+    {
+      brand: 'msi',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BG94BM2G&Quantity.1=1',
+      model: 'suprim liquid x',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BG94BM2G',
+    },
+    {
+      brand: 'msi',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BG92GY61&Quantity.1=1',
+      model: 'suprim x',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BG92GY61',
+    },
+    {
+      brand: 'pny',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BG93V9GW&Quantity.1=1',
+      model: 'epic x',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BG93V9GW',
+    },
+    {
+      brand: 'zotac',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B09D1VF7F8&Quantity.1=1',
+      model: 'amp extreme airo',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B09D1VF7F8',
+    },
+    {
+      brand: 'zotac',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BGJQBW6Z&Quantity.1=1',
+      model: 'trinity',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BGJQBW6Z',
+    },
+    {
+      brand: 'zotac',
+      cartUrl:
+        'https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B0BGJRHX1X&Quantity.1=1',
+      model: 'trinity oc',
+      series: '4090',
+      url: 'https://www.amazon.com/portal-migration/aod?asin=B0BGJRHX1X',
+    },
+
     {
       brand: 'amd',
       cartUrl:

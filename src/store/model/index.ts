@@ -119,6 +119,7 @@ import {NvidiaDE} from './nvidia-de';
 import {NvidiaES} from './nvidia-es';
 import {NvidiaFR} from './nvidia-fr';
 import {NvidiaGB} from './nvidia-gb';
+import {NvidiaUS} from './nvidia-us';
 import {OfficeDepot} from './officedepot';
 import {Ollo} from './ollo';
 import {Opirata} from './opirata';
@@ -293,6 +294,7 @@ export const storeList = new Map([
   [NvidiaES.name, NvidiaES],
   [NvidiaFR.name, NvidiaFR],
   [NvidiaGB.name, NvidiaGB],
+  [NvidiaUS.name, NvidiaUS],
   [OfficeDepot.name, OfficeDepot],
   [Ollo.name, Ollo],
   [Opirata.name, Opirata],
