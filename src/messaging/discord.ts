@@ -8,7 +8,7 @@ import {RawUserData} from 'discord.js/typings/rawDataTypes';
 const {notifyGroup, webhooks, notifyGroupSeries} = config.notifications.discord;
 const {pollInterval, responseTimeout, token, userId} = config.captchaHandler;
 const clientOptions: Discord.ClientOptions = {
-  intents: new Discord.Intents(),
+  intents: [],
 };
 
 function getIdAndToken(webhook: string) {
@@ -30,7 +30,7 @@ export function sendDiscordMessage(link: Link, store: Store) {
 
     (async () => {
       try {
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
           .setTitle('_**Stock alert!**_')
           .setDescription(
             '> provided by [streetmerchant](https://github.com/jef/streetmerchant) with :heart:'
@@ -39,18 +39,30 @@ export function sendDiscordMessage(link: Link, store: Store) {
             'https://raw.githubusercontent.com/jef/streetmerchant/main/docs/assets/images/streetmerchant-logo.png'
           )
           .setColor('#52b788')
+          .setTimestamp()
+          .addFields([
+            {name: 'Store', value: store.name, inline: true},
+            ...(link.price
+              ? [
+                  {
+                    name: 'Price',
+                    value: `${store.currency}${link.price}`,
+                    inline: true,
+                  },
+                ]
+              : []),
+            {
+              name: 'Product Page',
+              value: link.url,
+            },
+            ...(link.cartUrl
+              ? [{name: 'Add to Cart', value: link.cartUrl}]
+              : []),
+            {name: 'Brand', value: link.brand, inline: true},
+            {name: 'Model', value: link.model, inline: true},
+            {name: 'Series', value: link.series, inline: true},
+          ])
           .setTimestamp();
-
-        embed.addField('Store', store.name, true);
-        if (link.price)
-          embed.addField('Price', `${store.currency}${link.price}`, true);
-        embed.addField('Product Page', link.url);
-        if (link.cartUrl) embed.addField('Add to Cart', link.cartUrl);
-        embed.addField('Brand', link.brand, true);
-        embed.addField('Model', link.model, true);
-        embed.addField('Series', link.series, true);
-
-        embed.setTimestamp();
 
         let notifyText: string[] = [];
 
@@ -75,7 +87,7 @@ export function sendDiscordMessage(link: Link, store: Store) {
             new Promise((resolve, reject) => {
               client
                 .send({
-                  content: notifyText.length ? notifyText.join(' ') : null,
+                  content: notifyText.length ? notifyText.join(' ') : undefined,
                   embeds: [embed],
                   username: 'streetmerchant',
                 })
@@ -211,10 +223,12 @@ async function getDiscordClientAsync() {
 async function getDMChannelAsync(client?: Discord.Client) {
   let dmChannelInstance = undefined;
   if (userId && client) {
-    const user = await new Discord.User(client, {
-      id: userId,
-    } as RawUserData).fetch();
-    dmChannelInstance = await user.createDM();
+    const user = await client.users.fetch(userId).catch(err => {
+      console.log('Failed to fetch user for getDMChannelAsync, err:', err);
+      return null;
+    });
+
+    dmChannelInstance = await user?.createDM();
   }
   return dmChannelInstance;
 }
