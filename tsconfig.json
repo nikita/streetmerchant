@@ -5,11 +5,9 @@
     "outDir": "build",
     "resolveJsonModule": true,
     "rootDir": ".",
-    // todo: remove
+    // todo: remove,
+    "lib": ["DOM"],
     "skipLibCheck": true
   },
-  "include": [
-    "src/**/*.ts",
-    "test/**/*.ts"
-  ]
+  "include": ["src/**/*.ts", "test/**/*.ts"]
 }
