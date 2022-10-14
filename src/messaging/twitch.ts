@@ -1,8 +1,12 @@
 import {Link, Store} from '../store/model';
 import {Print, logger} from '../logger';
-import {RefreshableAuthProvider, StaticAuthProvider} from 'twitch-auth';
+import {
+  RefreshingAuthProvider,
+  StaticAuthProvider,
+  AccessToken,
+} from '@twurple/auth';
 import {existsSync, promises, readFileSync} from 'fs';
-import {ChatClient} from 'twitch-chat-client';
+import {ChatClient} from '@twurple/chat';
 import {config} from '../config';
 
 const {twitch} = config.notifications;
@@ -10,51 +14,28 @@ const {twitch} = config.notifications;
 const messages: string[] = [];
 let alreadySaying = false;
 
-let tokenData = {
+let tokenData: AccessToken = {
+  ...(existsSync('./twitch.json') &&
+    JSON.parse(readFileSync('./twitch.json', 'utf-8'))),
   accessToken: twitch.accessToken,
-  expiryTimestamp: 0,
   refreshToken: twitch.refreshToken,
 };
 
-if (existsSync('./twitch.json')) {
-  tokenData = {
-    ...JSON.parse(readFileSync('./twitch.json', 'utf-8')),
-    ...tokenData,
-  };
-}
-
-const chatClient: ChatClient = new ChatClient(
-  new RefreshableAuthProvider(
-    new StaticAuthProvider(twitch.clientId, tokenData.accessToken),
-    {
-      clientSecret: twitch.clientSecret,
-      expiry:
-        tokenData.expiryTimestamp === null
-          ? null
-          : new Date(tokenData.expiryTimestamp),
-      onRefresh: async ({accessToken, refreshToken, expiryDate}) => {
-        return promises.writeFile(
-          './twitch.json',
-          JSON.stringify(
-            {
-              accessToken,
-              expiryTimestamp:
-                expiryDate === null ? null : expiryDate.getTime(),
-              refreshToken,
-            },
-            null,
-            4
-          ),
-          'utf-8'
-        );
-      },
-      refreshToken: tokenData.refreshToken,
-    }
-  ),
+const authProvider = new RefreshingAuthProvider(
   {
-    channels: [twitch.channel],
-  }
+    clientId: twitch.clientId,
+    clientSecret: twitch.clientSecret,
+    onRefresh: async newTokenData =>
+      await promises.writeFile(
+        './twitch.json',
+        JSON.stringify(newTokenData, null, 4),
+        'utf-8'
+      ),
+  },
+  tokenData
 );
+
+const chatClient = new ChatClient({authProvider, channels: [twitch.channel]});
 
 chatClient.onJoin((channel: string, user: string) => {
   if (channel === `#${twitch.channel}` && user === chatClient.currentNick) {
@@ -63,7 +44,7 @@ chatClient.onJoin((channel: string, user: string) => {
 
       if (message !== undefined) {
         try {
-          void chatClient.say(channel, message);
+          chatClient.say(channel, message);
           logger.info('✔ twitch message sent');
         } catch (error: unknown) {
           logger.error("✖ couldn't send twitch message", error);
@@ -72,7 +53,7 @@ chatClient.onJoin((channel: string, user: string) => {
     }
   }
 
-  void chatClient.quit();
+  chatClient.quit();
 });
 
 chatClient.onDisconnect(() => {
@@ -95,7 +76,7 @@ export function sendTwitchMessage(link: Link, store: Store) {
 
     if (!alreadySaying) {
       alreadySaying = true;
-      void chatClient.connect();
+      chatClient.connect();
     }
   }
 }
