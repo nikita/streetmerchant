@@ -88,6 +88,8 @@ async function getCaptchaPayloadAsync(
       break;
     case 'link':
       captchaPayload = {
+        // TODO: Add types for captcha response
+        // @ts-ignore
         content: await challengeElement?.evaluate(img => img.src),
         type: 'text',
       };
