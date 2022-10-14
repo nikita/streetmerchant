@@ -114,6 +114,7 @@ export type Model =
   | 'ftw3 ultra hydro copper'
   | 'gamerock'
   | 'gamerock oc'
+  | 'windforce'
   | 'gaming oc'
   | 'gaming oc waterforce wb'
   | 'gaming oc pro'
