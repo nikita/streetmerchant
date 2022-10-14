@@ -16,6 +16,10 @@ if (streamlabs.accessToken && streamlabs.type) {
   requestParams.append('duration', streamlabs.duration.toString());
 }
 
+interface Response {
+  success?: boolean;
+}
+
 export function sendStreamLabsAlert(link: Link, store: Store) {
   if (requestParams) {
     logger.debug('↗ sending StreamLabs alert');
@@ -30,7 +34,7 @@ export function sendStreamLabsAlert(link: Link, store: Store) {
           body: requestParams,
         });
 
-        const json = await response.json();
+        const json = (await response.json()) as Response;
         if (!json.success) throw Error(JSON.stringify(json));
 
         logger.info('✔ StreamLabs alert sent');
