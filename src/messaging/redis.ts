@@ -1,12 +1,12 @@
 import {Link, Store} from '../store/model';
-import redis, {RedisClient} from 'redis';
+import redis, {RedisClientType} from 'redis';
 import {config} from '../config';
 import {logger} from '../logger';
 
 const {url} = config.notifications.redis;
-let client: RedisClient;
+let client: RedisClientType;
 
-function initRedis(): RedisClient | null {
+function initRedis(): RedisClientType | null {
   if (url) {
     client = redis.createClient({url});
   }
@@ -30,21 +30,22 @@ export function updateRedis(link: Link, store: Store) {
       };
 
       const message = JSON.stringify(value);
-      client.set(key, message, (error, success) => {
-        if (error) {
-          logger.error(`✖ couldn't update redis for key (${key})`);
-        } else {
-          logger.info('✔ redis updated');
-        }
-      });
 
-      client.publish('streetmerchant', message, (error, success) => {
-        if (error) {
+      client
+        .set(key, message)
+        .then(_ => logger.info('✔ redis updated'))
+        .catch(err => {
+          logger.error(`✖ couldn't update redis for key (${key})`);
+          throw err;
+        });
+
+      client
+        .publish('streetmerchant', message)
+        .then(_ => logger.info('✔ redis message published'))
+        .catch(err => {
           logger.error(`✖ couldn't publish to redis`);
-        } else {
-          logger.info('✔ redis message published');
-        }
-      });
+          throw err;
+        });
     }
   } catch (error: unknown) {
     logger.error("✖ couldn't update redis", error);
